@@ -1,0 +1,172 @@
+#title: 接口设计
+#author: wendal
+#index:0,1
+--------------------------------------------------------------------------------------
+Issue定义
+
+	描述一个Issue的属性和特征
+	
+	json格式描述
+	{{{
+	{
+		id : "XXX-XXX", //TODO 设计Id的命名规则
+		title : "测试发布进程的性能",
+		reportBy : "admin@wendal.net", 
+		createTime : "2012-01-20 00:00:00",
+		assigneTo : "admin@wendal.net",//具体会引用一个User实体
+		tags : ["Millstone-1.b.42","Module-Dao","Priority-Highest"], //用户自定义
+		watchers : ["pad@wendal.net","wendal1985@gmail.com"], //具体会引用一个User实体
+		attachments : ["xxx.zip","xxx.jpg"] //不允许重名
+		comments : [
+			{
+				user : "admin@wendal.net",//具体会引用一个User实体
+				createTime : "2012-01-20 00:00:00",
+				content : "测测更健康"
+			}
+		],
+		status : "OPEN" /*可选值 OPEN/CLOSE/DELETED */
+	}
+	}}}
+	
+用户定义
+
+	OAuth/OpenID登录的用户,并保存为一个记录
+	{{{
+	{
+		"uid"     		:  "xxx" //TODO 设计生成机制
+		"email" 		: "admin@wendal.net",
+		"display_name"  : "Admin",
+		"openid" 		: "google"
+	}
+	}}}
+	
+用户登录 /user/login/?
+
+	产生OpenID或者OAuth授权链接,供用户登录, ?代表QQ/Google等等方式
+	
+用户登出 /user/logout
+	
+	注销用户登录状态
+	
+新建Issue /issue/create
+
+	请求的格式:
+	{{{
+	{
+		title : "新建一个需求",
+		comment : "需求是这样做的 ....."
+	}
+	}}}
+
+查询issue /issue/query
+
+	用于查询,罗列issue
+	
+	请求格式:
+	{{{
+	{
+		pager : {
+			page : 1,
+			limit : 10,
+			skip  : 0
+		},
+		tags : ["Module-Dao"],
+		status : "OPEN",
+		assigneTo : "admin@wendal.net",
+		reportBy : "admin@wendal.net",
+	}
+	}}}
+	
+添加comment /issue/comment/add
+
+	为Issue添加一条新comment,并监视其变化
+	{{{
+	{
+		id : "XXXX-XXXX",
+		content : "sodododoododo"
+	}
+	}}}
+
+关闭Issue /issue/close
+
+	{{{
+	{
+		"id" : "XXX-XXX"
+	}
+	}}}
+	
+重开Issue /issue/reopen
+
+	{{{
+	{
+		"id" : "XXX-XXX"
+	}
+	}}}
+	
+为Issue添加Tag /issue/tag/add
+
+	{{{
+	{
+		"id" : "XXX-XXX",
+		"tags" : ["Millstone-1.b.42"]
+	}
+	}}}
+	
+为Issue移除Tag /issue/tag/remove
+
+	{{{
+	{
+		"id" : "XXX-XXX",
+		"tags" : ["Millstone-1.b.42"]
+	}
+	}}}
+	
+监视一个Issue /issue/watcher/add
+
+	主动监视一个Issue
+	{{{
+	{
+		"id" : "XXX-XXX"
+	}
+	}}}
+	
+取消监视一个Issue /issue/watcher/remove
+
+	取消监视一个Issue
+	{{{
+	{
+		"id" : "XXX-XXX"
+	}
+	}}}
+	
+查询用户的邮件设置  /user/email/get
+
+	获取邮件提醒设置
+	
+提醒邮件设置 /user/email/set
+
+	{{{
+	{
+		"new_comments" : true,
+		"tags_change"  : false
+	}
+	}}}
+	
+上传附件 /issue/attachment
+
+	请求体为文件内容,请求需要含有下面参数
+		* id       issue的id
+		* filename 文件名
+		* filesize 文件大小,用于校验
+		
+服务器响应的定义
+
+	基本格式
+	{{{
+	{
+		ok : true,
+		data : {
+		   /*具体数据,如果有的话*/
+		}
+	}
+	}}}
