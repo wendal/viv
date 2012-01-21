@@ -1,11 +1,22 @@
 package org.nutz.viv.bean;
 
+import java.util.Map;
+
+import com.bugull.mongo.annotations.Entity;
+import com.bugull.mongo.annotations.Property;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class UserBean {
+@EqualsAndHashCode(callSuper=false)
+@Entity(name="viv_user")
+public class UserBean extends MongodbBean {
 
-	private String id;
+	@Property
 	private String email;
+	@Property
 	private String openid;
+	@Property
+	private Map<String, String> notifyConfig;
 }

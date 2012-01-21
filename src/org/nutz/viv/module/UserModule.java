@@ -1,11 +1,21 @@
 package org.nutz.viv.module;
 
+import java.util.Map;
+
+import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
+import org.nutz.mvc.Mvcs;
 import org.nutz.mvc.annotation.At;
+import org.nutz.mvc.annotation.Attr;
+import org.nutz.viv.bean.UserBean;
+import org.nutz.viv.dao.UserDao;
 
 @IocBean
 @At("/user")
 public class UserModule {
+	
+	@Inject
+	private UserDao userDao;
 
 	@At("/login/?")
 	public void login(String openId) {
@@ -14,7 +24,7 @@ public class UserModule {
 	
 	@At("/logout")
 	public void logout() {
-		//TODO
+		Mvcs.getReq().getSession().invalidate();
 	}
 	
 	@At("/login/callback") 
@@ -22,9 +32,13 @@ public class UserModule {
 		//TODO
 	}
 	
-	@At
-	public void queryEmailConfig() {}
+	@At("/email/config/get")
+	public Object queryEmailConfig(@Attr("me") String uid) {
+		return ((UserBean)userDao.findOne(uid)).getNotifyConfig();
+	}
 
-	@At
-	public void setEmailConfig() {}
+	@At("/email/config/set")
+	public void setEmailConfig(@Attr("me") String uid, Map<String, String> notifyConfig) {
+		userDao.set(uid, "notifyConfig", notifyConfig);
+	}
 }
