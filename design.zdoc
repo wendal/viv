@@ -9,14 +9,29 @@ Issue定义
 	json格式描述
 	{{{
 	{
-		id : "XXX-XXX", //TODO 设计Id的命名规则
+		id : "446", //单纯数字递增
 		title : "测试发布进程的性能",
 		reportBy : "admin@wendal.net", 
 		createTime : "2012-01-20 00:00:00",
 		assigneTo : "admin@wendal.net",//具体会引用一个User实体
 		tags : ["Millstone-1.b.42","Module-Dao","Priority-Highest"], //用户自定义
 		watchers : ["pad@wendal.net","wendal1985@gmail.com"], //具体会引用一个User实体
-		attachments : ["xxx.zip","xxx.jpg"] //不允许重名
+		attachments : [
+			{
+				uploadBy : "admin@wendal.net",
+				name : "xxx.zip",
+				uploadTime : "2012-01-20 00:00:00",
+				size : 102400,
+				mime_type : "zip"
+			},
+			{
+				uploadBy : "admin@wendal.net",
+				name : "xxx.jpg",
+				createTime : "2012-01-20 00:20:00",
+				size : 102345,
+				mime_type : "jpg"
+			}
+		] //不允许重名
 		comments : [
 			{
 				user : "admin@wendal.net",//具体会引用一个User实体
@@ -24,7 +39,7 @@ Issue定义
 				content : "测测更健康"
 			}
 		],
-		status : "OPEN" /*可选值 OPEN/CLOSE/DELETED */
+		status : "OPEN" /*可选值 OPEN/CLOSE */
 	}
 	}}}
 	
@@ -33,7 +48,7 @@ Issue定义
 	OAuth/OpenID登录的用户,并保存为一个记录
 	{{{
 	{
-		"uid"     		:  "xxx" //TODO 设计生成机制
+		"uid"     		:  "xxx" //使用mongodb的ObjectID或UUID
 		"email" 		: "admin@wendal.net",
 		"display_name"  : "Admin",
 		"openid" 		: "google"
@@ -77,7 +92,7 @@ Issue定义
 	}
 	}}}
 	
-添加comment /issue/comment/add
+添加comment /issue/?/comment/add
 
 	为Issue添加一条新comment,并监视其变化
 	{{{
@@ -87,7 +102,7 @@ Issue定义
 	}
 	}}}
 
-关闭Issue /issue/close
+关闭Issue /issue/?/close
 
 	{{{
 	{
@@ -95,7 +110,7 @@ Issue定义
 	}
 	}}}
 	
-重开Issue /issue/reopen
+重开Issue /issue/?/reopen
 
 	{{{
 	{
@@ -103,7 +118,7 @@ Issue定义
 	}
 	}}}
 	
-为Issue添加Tag /issue/tag/add
+为Issue添加Tag /issue/?/tag/add
 
 	{{{
 	{
@@ -112,7 +127,7 @@ Issue定义
 	}
 	}}}
 	
-为Issue移除Tag /issue/tag/remove
+为Issue移除Tag /issue/?/tag/remove
 
 	{{{
 	{
@@ -121,7 +136,7 @@ Issue定义
 	}
 	}}}
 	
-监视一个Issue /issue/watcher/add
+监视一个Issue /issue/?/watcher/add
 
 	主动监视一个Issue
 	{{{
@@ -130,7 +145,7 @@ Issue定义
 	}
 	}}}
 	
-取消监视一个Issue /issue/watcher/remove
+取消监视一个Issue /issue/?/watcher/remove
 
 	取消监视一个Issue
 	{{{
@@ -152,12 +167,15 @@ Issue定义
 	}
 	}}}
 	
-上传附件 /issue/attachment
+上传附件 /issue/?/attachment/add
 
 	请求体为文件内容,请求需要含有下面参数
 		* id       issue的id
 		* filename 文件名
-		* filesize 文件大小,用于校验
+		* filesize 文件大小,用于校验	
+下载附件 /issue/?/attachment/download/?
+
+	下载文件
 		
 服务器响应的定义
 
