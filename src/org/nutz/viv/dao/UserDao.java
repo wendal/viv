@@ -7,7 +7,7 @@ import com.bugull.mongo.BuguDao;
 
 @IocBean
 public class UserDao extends BuguDao {
-	
+
 	public UserDao() {
 		super(UserBean.class);
 	}

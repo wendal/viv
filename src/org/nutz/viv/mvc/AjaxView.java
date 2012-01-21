@@ -18,8 +18,8 @@ import org.nutz.mvc.View;
 public class AjaxView implements View {
 
 	@Override
-	public void render(HttpServletRequest req, HttpServletResponse resp, Object obj)
-			throws IOException {
+	public void render(HttpServletRequest req, HttpServletResponse resp,
+			Object obj) throws IOException {
 		AjaxReturn re;
 		// 空
 		if (null == obj) {
@@ -27,7 +27,9 @@ public class AjaxView implements View {
 		}
 		// 异常
 		else if (obj instanceof Throwable) {
-			re = Ajax.fail().setMsg(Lang.unwrapThrow((Throwable) obj).getMessage()).setData(obj);
+			re = Ajax.fail()
+					.setMsg(Lang.unwrapThrow((Throwable) obj).getMessage())
+					.setData(obj);
 		}
 		// AjaxReturn
 		else if (obj instanceof AjaxReturn) {

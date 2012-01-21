@@ -7,7 +7,7 @@ import com.bugull.mongo.BuguDao;
 
 @IocBean
 public class AttachmentDao extends BuguDao {
-	
+
 	public AttachmentDao() {
 		super(AttachmentBean.class);
 	}

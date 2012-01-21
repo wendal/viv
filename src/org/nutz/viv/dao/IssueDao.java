@@ -7,7 +7,7 @@ import com.bugull.mongo.AdvancedDao;
 
 @IocBean
 public class IssueDao extends AdvancedDao {
-	
+
 	public IssueDao() {
 		super(IssueBean.class);
 	}

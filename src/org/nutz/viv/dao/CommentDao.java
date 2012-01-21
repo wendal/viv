@@ -7,7 +7,7 @@ import com.bugull.mongo.BuguDao;
 
 @IocBean
 public class CommentDao extends BuguDao {
-	
+
 	public CommentDao() {
 		super(CommentBean.class);
 	}

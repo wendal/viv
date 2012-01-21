@@ -10,7 +10,7 @@ import com.bugull.mongo.BuguConnection;
 public class VivSetup implements Setup {
 
 	private static final Log log = Logs.get();
-	
+
 	@Override
 	public void init(NutConfig config) {
 		config.getIoc().get(BuguConnection.class).connect();
