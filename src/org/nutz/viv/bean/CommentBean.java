@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-@Entity(name="viv_issue")
+@Entity(name="comment")
 public class CommentBean extends MongodbBean {
 
 	@Ref(cascade="R")

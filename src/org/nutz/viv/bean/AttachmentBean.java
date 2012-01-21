@@ -13,7 +13,7 @@ import com.bugull.mongo.annotations.Ref;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-@Entity(name="viv_attachment")
+@Entity(name="attachment")
 @EnsureIndex("{'name':1}")
 public class AttachmentBean extends MongodbBean {
 	

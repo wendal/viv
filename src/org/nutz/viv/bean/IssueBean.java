@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-@Entity(name="viv_issue")
+@Entity(name="issue")
 public class IssueBean extends MongodbBean {
 
 	@Property

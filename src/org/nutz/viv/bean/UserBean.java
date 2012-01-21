@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-@Entity(name="viv_user")
+@Entity(name="vuser")
 public class UserBean extends MongodbBean {
 
 	@Property

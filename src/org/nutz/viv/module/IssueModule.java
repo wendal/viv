@@ -24,6 +24,7 @@ import org.nutz.viv.bean.CommentBean;
 import org.nutz.viv.bean.IssueBean;
 import org.nutz.viv.bean.UserBean;
 import org.nutz.viv.dao.IssueDao;
+import org.nutz.viv.util.MongodbHeper;
 
 import com.bugull.mongo.fs.BuguFS;
 import com.mongodb.gridfs.GridFSDBFile;
@@ -36,8 +37,7 @@ public class IssueModule {
 	@At
 	public void create(@Param("title")String title, @Param("content")String content, @Attr("me") UserBean me){
 		IssueBean issue = IssueBean.create(title, content, me);
-		long maxIssueNo = (long) issueDao.max("issueNo");
-		issue.setIssueNo(maxIssueNo + 1);
+		issue.setIssueNo(MongodbHeper.getAutoIncreaseID("issue"));
 		issueDao.insert(issue);
 	}
 
