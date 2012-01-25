@@ -112,6 +112,6 @@ public class IssueModule {
 	private IssueDao issueDao;
 	
 	protected IssueBean _getIssueBy(long issueNo) {
-		return (IssueBean) issueDao.findOne("issueNo", issueNo);
+		return issueDao.findOne("issueNo", issueNo);
 	}
 }

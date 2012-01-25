@@ -64,7 +64,7 @@ public class UserModule {
         String alias = (String) request.getSession().getAttribute(ATTR_ALIAS);
         Authentication authentication = manager.getAuthentication(request, mac_key, alias);
         authentication.getEmail();
-        UserBean user = (UserBean) userDao.findOne("email", authentication.getEmail());
+        UserBean user = userDao.findOne("email", authentication.getEmail());
         if (user == null) {
         	user = new UserBean();
         	user.setEmail(authentication.getEmail());

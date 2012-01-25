@@ -3,10 +3,8 @@ package org.nutz.viv.dao;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.viv.bean.UserBean;
 
-import com.bugull.mongo.BuguDao;
-
 @IocBean
-public class UserDao extends BuguDao {
+public class UserDao extends EnhandBuguDao<UserBean> {
 
 	public UserDao() {
 		super(UserBean.class);
