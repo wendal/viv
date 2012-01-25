@@ -65,7 +65,9 @@ public class IssueModule {
 
 	@At("/?/tag/add")
 	public void addTags(long issueNo, @Param("tag")String tag) {
-		issueDao.push(_getIssueBy(issueNo), "tags", tag);
+		BasicDBObject query = new BasicDBObject("issueNo", issueNo);
+		BasicDBObject update = new BasicDBObject("$addToSet", new BasicDBObject("tags", tag));
+		issueDao.getCollection().update(query, update);
 	}
 
 	@At("/?/tag/remove")
