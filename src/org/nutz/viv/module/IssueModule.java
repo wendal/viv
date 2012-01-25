@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import lombok.Setter;
 
+import org.bson.types.ObjectId;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.mvc.Mvcs;
@@ -65,7 +66,7 @@ public class IssueModule {
 
 	@At("/?/tag/add")
 	public void addTags(long issueNo, @Param("tag")String tag) {
-		BasicDBObject query = new BasicDBObject("issueNo", issueNo);
+		BasicDBObject query = new BasicDBObject("_id", new ObjectId(_getIssueBy(issueNo).getId()));
 		BasicDBObject update = new BasicDBObject("$addToSet", new BasicDBObject("tags", tag));
 		issueDao.getCollection().update(query, update);
 	}
@@ -77,7 +78,7 @@ public class IssueModule {
 
 	@At("/?/watcher/add")
 	public void addWatcher(long issueNo, @Attr("me") UserBean me) {
-		BasicDBObject query = new BasicDBObject("issueNo", issueNo);
+		BasicDBObject query = new BasicDBObject("_id", new ObjectId(_getIssueBy(issueNo).getId()));
 		BasicDBObject update = new BasicDBObject("$addToSet", new BasicDBObject("watchers", me.asRef()));
 		issueDao.getCollection().update(query, update);
 	}
