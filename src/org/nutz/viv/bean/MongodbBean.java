@@ -2,12 +2,11 @@ package org.nutz.viv.bean;
 
 import java.io.Serializable;
 
-import com.bugull.mongo.BuguEntity;
-import com.bugull.mongo.annotations.Id;
-
+import lombok.Getter;
 import lombok.Setter;
 
-import lombok.Getter;
+import com.bugull.mongo.BuguEntity;
+import com.bugull.mongo.annotations.Id;
 
 public abstract class MongodbBean implements Serializable, BuguEntity {
 	

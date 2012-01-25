@@ -27,6 +27,7 @@ import org.nutz.viv.dao.IssueDao;
 import org.nutz.viv.util.MongodbHeper;
 
 import com.bugull.mongo.fs.BuguFS;
+import com.mongodb.BasicDBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 
 @IocBean
@@ -74,7 +75,9 @@ public class IssueModule {
 
 	@At("/?/watcher/add")
 	public void addWatcher(long issueNo, @Attr("me") UserBean me) {
-		issueDao.push(_getIssueBy(issueNo), "watchers", me);
+		BasicDBObject query = new BasicDBObject("issueNo", issueNo);
+		BasicDBObject update = new BasicDBObject("$addToSet", new BasicDBObject("watchers", me.asRef()));
+		issueDao.getCollection().update(query, update);
 	}
 
 	@At("/?/watcher/remove")
